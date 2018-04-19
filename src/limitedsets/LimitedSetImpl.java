@@ -21,10 +21,6 @@ public class LimitedSetImpl<T> implements LimitedSet<T> {
 			this.time = time;
 			this.value = value;
 		}
-		@Override
-		public String toString() {
-			return time + ": " + value;
-		}
 	}
 	
 	public LimitedSetImpl() {
