@@ -1,6 +1,7 @@
 package limitedsets;
 
-import java.util.LinkedList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The class presents set which contains 10 or less elements T 
@@ -12,39 +13,8 @@ import java.util.LinkedList;
 public class LimitedSetImpl<T> implements LimitedSet<T> {
 
 	private final int SIZE = 10;
-	private final LinkedList<Node> limitedSet = new LinkedList<>();
-	
-	private class Node {
-		Long time;
-		T value;
-
-		Node(Long time, T value) {
-			this.time = time;
-			this.value = value;
-		}
-
-		@Override
-		public int hashCode() {
-			return value.hashCode();
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (value == obj) {
-				return true;
-			}
-			if (obj == null) {
-				if (value != null) {
-					return false;
-				}
-			}
-			if (!value.equals(obj)) {
-				return false;
-			}
-			return true;
-		}
-
-	}
+	private final Set<T> limitedSet = new HashSet<>(SIZE);
+	private T lastElement;
 	
 	public LimitedSetImpl() {
 	}
@@ -59,11 +29,13 @@ public class LimitedSetImpl<T> implements LimitedSet<T> {
 	@Override
 	public void add(T t) {
 		if (!contains(t)) {
-			long currentTime = System.currentTimeMillis();
 			if (limitedSet.size() == SIZE) {
-				limitedSet.removeLast();
+			    limitedSet.remove(lastElement);
+			    limitedSet.add(t);
+			    lastElement = t;
 			}
-			limitedSet.add(new Node(currentTime, t));
+			limitedSet.add(t);
+			lastElement = t;
 		}
 	}
 	/**
@@ -76,14 +48,7 @@ public class LimitedSetImpl<T> implements LimitedSet<T> {
 	
 	@Override
 	public boolean remove(T t) {
-		for (Node node : limitedSet) {
-			if(node.value.equals(t)) {
-				limitedSet.remove(node);
-				return true;
-			}
-		}
-		return false;
-		
+		return limitedSet.remove(t);
 	}
 	
 	/**
@@ -94,14 +59,9 @@ public class LimitedSetImpl<T> implements LimitedSet<T> {
 	 */
 	@Override
 	public boolean contains(T t) {
-		for (Node currentNode : limitedSet) {
-			if(currentNode.value.equals(t)) {
-				long currentTime = System.currentTimeMillis();
-				Node newNode = new Node(currentTime, t);
-				limitedSet.remove(currentNode);
-				limitedSet.add(newNode);
-				return true;
-			}
+		if(limitedSet.contains(t)) {
+		    lastElement = t;
+		    return true;
 		}
 		return false;
 	}
