@@ -17,10 +17,33 @@ public class LimitedSetImpl<T> implements LimitedSet<T> {
 	private class Node {
 		Long time;
 		T value;
+
 		Node(Long time, T value) {
 			this.time = time;
 			this.value = value;
 		}
+
+		@Override
+		public int hashCode() {
+			return value.hashCode();
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (value == obj) {
+				return true;
+			}
+			if (obj == null) {
+				if (value != null) {
+					return false;
+				}
+			}
+			if (!value.equals(obj)) {
+				return false;
+			}
+			return true;
+		}
+
 	}
 	
 	public LimitedSetImpl() {
