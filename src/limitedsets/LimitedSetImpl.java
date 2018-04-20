@@ -39,10 +39,8 @@ public class LimitedSetImpl<T> implements LimitedSet<T> {
 			long currentTime = System.currentTimeMillis();
 			if (limitedSet.size() == SIZE) {
 				limitedSet.removeLast();
-				limitedSet.add(new Node(currentTime, t));
-			} else {
-				limitedSet.add(new Node(currentTime, t));
 			}
+			limitedSet.add(new Node(currentTime, t));
 		}
 	}
 	/**
