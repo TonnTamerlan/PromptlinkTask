@@ -31,8 +31,6 @@ public class LimitedSetImpl<T> implements LimitedSet<T> {
 		if (!contains(t)) {
 			if (limitedSet.size() == SIZE) {
 			    limitedSet.remove(lastElement);
-			    limitedSet.add(t);
-			    lastElement = t;
 			}
 			limitedSet.add(t);
 			lastElement = t;
@@ -59,7 +57,7 @@ public class LimitedSetImpl<T> implements LimitedSet<T> {
 	 */
 	@Override
 	public boolean contains(T t) {
-		if(limitedSet.contains(t)) {
+	    if(limitedSet.contains(t)) {
 		    lastElement = t;
 		    return true;
 		}

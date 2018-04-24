@@ -14,13 +14,30 @@ class LimitedSetImplTest {
 		for (int i = 0; i < 12; i++) {
 			set.add(i);
 		}
+		
 		assertTrue(set.contains(8));
 		assertTrue(set.contains(11));
 		assertFalse(set.contains(9));
+		
+		//Testing adding two equals elements
+		set.add(11);
+		set.add(11);
+		assertTrue(set.contains(11));
+		
+		//Testing adding null
+		set.add(null);
+		assertTrue(set.contains(null));
+		
+		//Testing adding two different element when set seize equals 10
+		set.add(17);
+		assertTrue(set.contains(17));
+		set.add(18);
+		assertFalse(set.contains(17));
+		assertTrue(set.contains(18));
 	}
 
 	@Test
-	@DisplayName("Testing add method")
+	@DisplayName("Testing remove method")
 	void testRemove() {
 		LimitedSet<Integer> set = new LimitedSetImpl<>();
 		for (int i = 0; i < 12; i++) {
